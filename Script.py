@@ -26,7 +26,6 @@ def get_prices(offers):
 
 df = pd.read_csv("Raw Data.csv")
 df = df.replace({'0':np.nan, 0:np.nan, 0.00:np.nan})
-
 df['Supplier Best Offer'] = df.apply(lambda x: x.isin(df.min(axis=1)), axis=1).apply(lambda x: list(df.columns[x]), axis=1)
 suppliers = df.columns[1:-1].to_numpy()
 products = df['Product'].to_numpy()
