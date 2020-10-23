@@ -52,6 +52,7 @@ def main():
     }
 
     outcome_df = pd.DataFrame(outcome_dict)
+    outcome_df.to_csv(r'Outcome.csv', index = False)
 
     print(outcome_df)
 
