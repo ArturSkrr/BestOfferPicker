@@ -28,13 +28,15 @@ def main():
     df = pd.read_csv('Raw Data.csv', encoding='latin-1')
     df = df.replace({'0':np.nan, 0:np.nan, 0.00:np.nan})
 
-    df['Supplier Best Offer'] = df.apply(lambda x: x.isin(df.min(axis=1)), axis=1).apply(lambda x: list(df.columns[x]), axis=1)
-    suppliers = df.columns[1:-1].to_numpy()
-    products = df['Product'].to_numpy()
-    best_offers = df['Supplier Best Offer'].to_numpy()
+    df['Supplier Best Offer'] = df.apply(lambda x: x.isin(df.min(axis=1)), axis=1).apply(lambda x: list(df.columns[x]), axis=1)     # finding min price from each row and looking up the column name = supplier name
+    products = df['Product'].to_numpy()                                                                                             # taking all products from Product column
+    best_offers = df['Supplier Best Offer'].to_numpy()                                                                              # taking all suppliers with best offer per each row = product
+    
     df.drop(['Supplier Best Offer'],axis=1,inplace=True)
     df.drop(['Product'],axis=1,inplace=True)
-    offers  = df.to_numpy()
+
+    offers  = df.to_numpy()                                                                                                         # taking all prices from all suppliers
+
 
     second_mins, mins, maxs = get_prices(offers)
     percentages_sec_mins = count_percentage(mins, second_mins)
@@ -53,8 +55,6 @@ def main():
 
     outcome_df = pd.DataFrame(outcome_dict)
     outcome_df.to_csv(r'Outcome.csv', index = False)
-
-    print(outcome_df)
 
 if __name__ == "__main__":
     main()
